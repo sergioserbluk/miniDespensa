@@ -12,7 +12,8 @@ require_once __DIR__ . '/../includes/header.php'; // __DIR__ es la ruta del dire
 require_once __DIR__ . '/../includes/menu.php';
 
 // Mostrar el dashboard (o podrías redirigir a otra vista si querés)
-require_once __DIR__ . '/../modules/dashboard/index.php';
+//require_once __DIR__ . '/../modules/dashboard/index.php';
+echo "<h1>Bienvenido, " . htmlspecialchars($_SESSION['nombre']) . "</h1>";
 
 require_once __DIR__ . '/../includes/footer.php';
 
