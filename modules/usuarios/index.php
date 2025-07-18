@@ -1,11 +1,11 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
-    header('Location: /public/index.php');
+    header('Location: ' . BASE_URL . 'public/index.php');
     exit;
 }
 
-require_once '../../config/config.php';
+require_once __DIR__ . '/../../config/config.php';
 require_once BASE_PATH . '/config/db.php';
 require_once INCLUDES_PATH . '/header.php';
 require_once INCLUDES_PATH . '/menu.php';

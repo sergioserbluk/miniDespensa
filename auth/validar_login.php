@@ -7,7 +7,7 @@ $usuario = trim($_POST['usuario'] ?? '');
 $clave = trim($_POST['clave'] ?? '');
 
 if ($usuario === '' || $clave === '') {
-    header("Location: /public/index.php?error=1");
+    header('Location: ' . BASE_URL . 'public/index.php?error=1');
     exit;
 }
 
@@ -21,9 +21,9 @@ try {
         $_SESSION['usuario'] = $user['usuario'];
         $_SESSION['nombre'] = $user['nombre'];
         $_SESSION['rol'] = $user['rol'];
-        header("Location: ../public/index.php");
+        header('Location: ' . BASE_URL . 'public/index.php');
     } else {
-        header("Location: ../public/index.php?error=1");
+        header('Location: ' . BASE_URL . 'public/index.php?error=1');
     }
 } catch (PDOException $e) {
     die("Error: " . $e->getMessage());

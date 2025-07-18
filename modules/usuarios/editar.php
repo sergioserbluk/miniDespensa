@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
-    header('Location: /public/index.php');
+    header('Location: ' . BASE_URL . 'public/index.php');
     exit;
 }
 
