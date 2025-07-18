@@ -25,7 +25,7 @@
         <?php endif; ?>
 
         <li class="nav-item">
-            <a class="nav-link text-danger" href="/auth/logout.php">Salir</a>
+            <a class="nav-link text-danger" href="../auth/logout.php">Salir</a>
         </li>
     </ul>
 </div>
