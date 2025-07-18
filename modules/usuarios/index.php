@@ -5,7 +5,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
     exit;
 }
 
-require_once __DIR__ . '/../../config/config.php';
+require_once '../../config/config.php';
 require_once BASE_PATH . '/config/db.php';
 require_once INCLUDES_PATH . '/header.php';
 require_once INCLUDES_PATH . '/menu.php';
