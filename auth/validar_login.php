@@ -1,6 +1,7 @@
 <?php
 session_start();
-require_once __DIR__ . '/../config/db_login.php';
+require_once __DIR__ . '/../config/config.php';
+require_once BASE_PATH . '/config/db_login.php';
 
 $usuario = trim($_POST['usuario'] ?? '');
 $clave = trim($_POST['clave'] ?? '');

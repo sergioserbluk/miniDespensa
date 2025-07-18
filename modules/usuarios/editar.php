@@ -5,9 +5,10 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
     exit;
 }
 
-require_once __DIR__ . '/../../config/db.php';
-require_once __DIR__ . '/../../includes/header.php';
-require_once __DIR__ . '/../../includes/menu.php';
+require_once __DIR__ . '/../../config/config.php';
+require_once BASE_PATH . '/config/db.php';
+require_once INCLUDES_PATH . '/header.php';
+require_once INCLUDES_PATH . '/menu.php';
 
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $stmt = $pdo->prepare('SELECT id, usuario, nombre, rol, activo FROM usuarios WHERE id = ?');
@@ -15,7 +16,7 @@ $stmt->execute([$id]);
 $usuario = $stmt->fetch();
 if (!$usuario) {
     echo '<div class="alert alert-danger">Usuario no encontrado</div>';
-    require_once __DIR__ . '/../../includes/footer.php';
+    require_once INCLUDES_PATH . '/footer.php';
     exit;
 }
 
@@ -63,5 +64,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <a href="index.php" class="btn btn-secondary">Cancelar</a>
 </form>
 <?php
-require_once __DIR__ . '/../../includes/footer.php';
+require_once INCLUDES_PATH . '/footer.php';
 

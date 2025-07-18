@@ -5,9 +5,10 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
     exit;
 }
 
-require_once __DIR__ . '/../../config/db.php';
-require_once __DIR__ . '/../../includes/header.php';
-require_once __DIR__ . '/../../includes/menu.php';
+require_once __DIR__ . '/../../config/config.php';
+require_once BASE_PATH . '/config/db.php';
+require_once INCLUDES_PATH . '/header.php';
+require_once INCLUDES_PATH . '/menu.php';
 
 // Obtener usuarios
 $stmt = $pdo->query('SELECT id, usuario, nombre, rol, activo FROM usuarios ORDER BY id');
@@ -42,5 +43,5 @@ $usuarios = $stmt->fetchAll();
     </tbody>
 </table>
 <?php
-require_once __DIR__ . '/../../includes/footer.php';
+require_once INCLUDES_PATH . '/footer.php';
 
