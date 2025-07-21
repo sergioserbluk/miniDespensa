@@ -26,6 +26,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $costo = $_POST['precio_costo'] !== '' ? (float)$_POST['precio_costo'] : 0;
     $utilidad = $_POST['utilidad'] !== '' ? (float)$_POST['utilidad'] : 0;
     $venta = $_POST['precio_venta'] !== '' ? (float)$_POST['precio_venta'] : 0;
+
+    // Calcular precio de venta si se proporcionan costo y margen de utilidad
+    if ($costo > 0 && $utilidad > 0) {
+        $venta = round($costo * (1 + $utilidad / 100), 2);
+    }
     $estado = isset($_POST['estado']) ? 1 : 0;
 
     $imagenRel = '';
@@ -105,5 +110,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <button type="submit" class="btn btn-primary">Guardar</button>
     <a href="index.php" class="btn btn-secondary">Cancelar</a>
 </form>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const costoInput = document.querySelector('input[name="precio_costo"]');
+    const utilidadInput = document.querySelector('input[name="utilidad"]');
+    const ventaInput = document.querySelector('input[name="precio_venta"]');
+
+    function calcularVenta() {
+        const costo = parseFloat(costoInput.value);
+        const utilidad = parseFloat(utilidadInput.value);
+        if (!isNaN(costo) && !isNaN(utilidad)) {
+            const venta = costo * (1 + utilidad / 100);
+            ventaInput.value = venta.toFixed(2);
+        }
+    }
+
+    costoInput.addEventListener('input', calcularVenta);
+    utilidadInput.addEventListener('input', calcularVenta);
+});
+</script>
 <?php
 require_once INCLUDES_PATH . '/footer.php';
