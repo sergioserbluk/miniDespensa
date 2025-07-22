@@ -35,14 +35,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $imagenRel = '';
     if (!empty($_FILES['imagen']['name']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-        $uploadDir = PUBLIC_PATH . '/img/productos';
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
+        $origDir  = PUBLIC_PATH . '/uploads/productos/originales';
+        $thumbDir = PUBLIC_PATH . '/uploads/productos/thumbs';
+        if (!is_dir($origDir)) {
+            mkdir($origDir, 0777, true);
         }
-        $fileName = uniqid() . '_' . basename($_FILES['imagen']['name']);
-        $targetPath = $uploadDir . '/' . $fileName;
+        if (!is_dir($thumbDir)) {
+            mkdir($thumbDir, 0777, true);
+        }
+
+        $fileName   = uniqid() . '_' . basename($_FILES['imagen']['name']);
+        $targetPath = $origDir . '/' . $fileName;
+
         if (move_uploaded_file($_FILES['imagen']['tmp_name'], $targetPath)) {
-            $imagenRel = 'img/productos/' . $fileName;
+            $thumbPath = $thumbDir . '/' . $fileName;
+
+            [$width, $height, $type] = getimagesize($targetPath);
+            switch ($type) {
+                case IMAGETYPE_JPEG:
+                    $src = imagecreatefromjpeg($targetPath);
+                    break;
+                case IMAGETYPE_PNG:
+                    $src = imagecreatefrompng($targetPath);
+                    break;
+                case IMAGETYPE_GIF:
+                    $src = imagecreatefromgif($targetPath);
+                    break;
+                default:
+                    $src = null;
+            }
+
+            if ($src) {
+                $newWidth  = 150;
+                $ratio     = $height / $width;
+                $newHeight = (int) round($newWidth * $ratio);
+                $thumbImg  = imagecreatetruecolor($newWidth, $newHeight);
+                imagecopyresampled($thumbImg, $src, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+                switch ($type) {
+                    case IMAGETYPE_JPEG:
+                        imagejpeg($thumbImg, $thumbPath, 90);
+                        break;
+                    case IMAGETYPE_PNG:
+                        imagepng($thumbImg, $thumbPath);
+                        break;
+                    case IMAGETYPE_GIF:
+                        imagegif($thumbImg, $thumbPath);
+                        break;
+                }
+                imagedestroy($thumbImg);
+                imagedestroy($src);
+            }
+
+            $imagenRel = 'uploads/productos/originales/' . $fileName;
         }
     }
 

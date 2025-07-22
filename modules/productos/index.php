@@ -13,7 +13,7 @@ require_once INCLUDES_PATH . '/menu.php';
 // Obtener productos disponibles
 // La estructura de la base define precio_venta, stock_actual y un campo
 // "estado" que indica si el producto está habilitado (1) o no.
-$stmt = $pdo->query('SELECT id, nombre, precio_venta, stock_actual FROM productos WHERE estado = 1 ORDER BY id');
+$stmt = $pdo->query('SELECT id, nombre, precio_venta, stock_actual, imagen FROM productos WHERE estado = 1 ORDER BY id');
 $productos = $stmt->fetchAll();
 ?>
 <h2>Listado de Productos</h2>
@@ -22,6 +22,7 @@ $productos = $stmt->fetchAll();
 <table class="table table-bordered">
     <thead>
         <tr>
+            <th>Imagen</th>
             <th>Nombre</th>
             <th>Precio</th>
             <th>Stock</th>
@@ -31,6 +32,17 @@ $productos = $stmt->fetchAll();
     <tbody>
         <?php foreach ($productos as $p): ?>
             <tr>
+                <td>
+                    <?php
+                    if (!empty($p['imagen'])) {
+                        $thumbRel  = str_replace('originales', 'thumbs', $p['imagen']);
+                        $thumbPath = PUBLIC_PATH . '/' . $thumbRel;
+                        if (file_exists($thumbPath)) {
+                            echo '<img src="' . BASE_URL . 'public/' . $thumbRel . '" width="50" class="img-thumbnail">';
+                        }
+                    }
+                    ?>
+                </td>
                 <td><?php echo htmlspecialchars($p['nombre']); ?></td>
                 <td><?php echo number_format($p['precio_venta'], 2); ?></td>
                 <td><?php echo $p['stock_actual']; ?></td>
