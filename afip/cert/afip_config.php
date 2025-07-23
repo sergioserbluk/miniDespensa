@@ -4,12 +4,13 @@
 // usando la librería oficial de AFIP para PHP
 // y el usuario de prueba 20111111112
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../../config/config.php';
+require_once VENDOR_PATH . '/autoload.php';
 
 $afip = new Afip([
     'CUIT' => 20111111112,
     'production' => false,
-    'cert' => __DIR__ . '/cert/certificate.crt',
-    'key'  => __DIR__ . '/cert/private.key',
-    'ta_folder' => __DIR__ . '/tmp' // opcional para almacenar el ticket de acceso
+    'cert' => AFIP_CERT_PATH . '/certificate.crt',
+    'key'  => AFIP_CERT_PATH . '/private.key',
+    'ta_folder' => AFIP_CERT_PATH . '/tmp' // opcional para almacenar el ticket de acceso
 ]);
