@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-07-2025 a las 13:41:55
+-- Tiempo de generación: 23-07-2025 a las 14:06:47
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -32,6 +32,23 @@ USE `minidespensa`;
 CREATE TABLE `categorias` (
   `id` int(11) NOT NULL,
   `nombre` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `clientes`
+--
+
+CREATE TABLE `clientes` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `tipo_documento` tinyint(2) DEFAULT 99 COMMENT '80: CUIT, 86: CUIL, 96: DNI, 99: Consumidor Final',
+  `numero_documento` bigint(20) DEFAULT NULL,
+  `domicilio` varchar(150) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `telefono` varchar(50) DEFAULT NULL,
+  `activo` tinyint(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -98,6 +115,15 @@ CREATE TABLE `productos` (
   `imagen` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `productos`
+--
+
+INSERT INTO `productos` (`id`, `codigo_barra`, `nombre`, `descripcion`, `id_categoria`, `unidad_medida`, `stock_actual`, `precio_costo`, `utilidad`, `precio_venta`, `fecha_actualizado`, `estado`, `imagen`) VALUES
+(1, '1212', 'uno dos uno dos', 'articulo de prueba', NULL, 'unidad', 10.00, 10.00, 35.00, 0.00, '2025-07-21 07:21:54', 1, 'img/productos/687e14c2d02ec_camisetalisa.png'),
+(2, '1313', 'uno tres', 'producto de prueba', NULL, 'unidad', 15.00, 10.00, 35.00, 13.50, '2025-07-22 07:56:05', 1, 'uploads/productos/originales/687f6e45069e1_barbie1-3.jpg'),
+(3, '1111', 'uno uno', 'un', NULL, 'unidad', 10.00, 10.00, 40.00, 14.00, '2025-07-22 08:27:44', 0, 'uploads/productos/originales/687f6ba05a9de_Captura de pantalla 2025-05-28 192810.png');
+
 -- --------------------------------------------------------
 
 --
@@ -118,7 +144,8 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `usuario`, `clave`, `nombre`, `rol`, `activo`) VALUES
-(1, 'admin', '$2y$10$2ThtgRxIQDB7pS81aqL9AeoZhzV2CkX1JBtvVZo.PVtOjZ9KDDTJa', 'Administrador General', 'admin', 1);
+(1, 'admin', '$2y$10$2ThtgRxIQDB7pS81aqL9AeoZhzV2CkX1JBtvVZo.PVtOjZ9KDDTJa', 'Administrador General', 'admin', 1),
+(2, 'jrios', '$2y$10$mkFr9PDsIeOALYn3I6mAWeiwQWdhPmq7YElB6ngutTkCOkJ.1y0wy', 'Jorge Rios', 'vendedor', 1);
 
 -- --------------------------------------------------------
 
@@ -136,6 +163,7 @@ CREATE TABLE `ventas` (
   `vencimiento_cae` date DEFAULT NULL,
   `total` decimal(10,2) DEFAULT 0.00,
   `usuario_id` int(11) DEFAULT NULL,
+  `cliente_id` int(11) DEFAULT NULL,
   `cliente_nombre` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -147,6 +175,12 @@ CREATE TABLE `ventas` (
 -- Indices de la tabla `categorias`
 --
 ALTER TABLE `categorias`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `clientes`
+--
+ALTER TABLE `clientes`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -192,7 +226,8 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `ventas`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `usuario_id` (`usuario_id`);
+  ADD KEY `usuario_id` (`usuario_id`),
+  ADD KEY `ventas_ibfk_2` (`cliente_id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -202,6 +237,12 @@ ALTER TABLE `ventas`
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `clientes`
+--
+ALTER TABLE `clientes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -226,13 +267,13 @@ ALTER TABLE `detalle_ventas`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `ventas`
@@ -274,7 +315,8 @@ ALTER TABLE `productos`
 -- Filtros para la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  ADD CONSTRAINT `ventas_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
+  ADD CONSTRAINT `ventas_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
+  ADD CONSTRAINT `ventas_ibfk_2` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
