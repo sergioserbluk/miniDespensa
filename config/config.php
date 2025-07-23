@@ -8,3 +8,7 @@ define('PUBLIC_PATH', BASE_PATH . '/public');
 define('MODULES_PATH', BASE_PATH . '/modules');
 define('AUTH_PATH', BASE_PATH . '/auth');
 
+// Rutas adicionales para dependencias externas y certificados de AFIP
+define('VENDOR_PATH', BASE_PATH . '/vendor');
+define('AFIP_CERT_PATH', BASE_PATH . '/afip/cert');
+
