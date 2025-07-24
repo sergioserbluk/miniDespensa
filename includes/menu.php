@@ -24,6 +24,12 @@
             </li>
         <?php endif; ?>
 
+        <?php if ($_SESSION['rol'] === 'admin'): ?>
+            <li class="nav-item">
+            <a class="nav-link" href="<?php echo BASE_URL . 'modules/clientes/'; ?>">Clientes</a>
+            </li>
+        <?php endif; ?>
+
         <?php if (in_array($_SESSION['rol'], ['admin'])): ?>
             <li class="nav-item">
             <a class="nav-link" href="<?php echo BASE_URL . 'modules/usuarios/index.php'; ?>">Usuarios</a>
