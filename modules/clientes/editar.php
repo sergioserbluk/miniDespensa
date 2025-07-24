@@ -22,12 +22,24 @@ if (!$cliente) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = trim($_POST['nombre']);
+    $tipoDoc = isset($_POST['tipo_documento']) ? (int)$_POST['tipo_documento'] : 99;
+    $numeroDoc = trim($_POST['numero_documento']);
+    $domicilio = trim($_POST['domicilio']);
+    $email = trim($_POST['email']);
     $telefono = trim($_POST['telefono']);
-    $direccion = trim($_POST['direccion']);
     $activo = isset($_POST['activo']) ? 1 : 0;
     if ($nombre) {
-        $stmt = $pdo->prepare('UPDATE clientes SET nombre=?, telefono=?, direccion=?, activo=? WHERE id=?');
-        $stmt->execute([$nombre, $telefono, $direccion, $activo, $id]);
+        $stmt = $pdo->prepare('UPDATE clientes SET nombre=?, tipo_documento=?, numero_documento=?, domicilio=?, email=?, telefono=?, activo=? WHERE id=?');
+        $stmt->execute([
+            $nombre,
+            $tipoDoc,
+            $numeroDoc !== '' ? $numeroDoc : null,
+            $domicilio,
+            $email,
+            $telefono,
+            $activo,
+            $id
+        ]);
         header('Location: index.php');
         exit;
     }
@@ -42,12 +54,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="text" name="nombre" class="form-control" value="<?php echo htmlspecialchars($cliente['nombre']); ?>" required>
     </div>
     <div class="mb-3">
-        <label class="form-label">Teléfono</label>
-        <input type="text" name="telefono" class="form-control" value="<?php echo htmlspecialchars($cliente['telefono']); ?>">
+        <label class="form-label">Tipo Documento</label>
+        <select name="tipo_documento" class="form-select">
+            <option value="80" <?php echo $cliente['tipo_documento']==80?'selected':''; ?>>CUIT</option>
+            <option value="86" <?php echo $cliente['tipo_documento']==86?'selected':''; ?>>CUIL</option>
+            <option value="96" <?php echo $cliente['tipo_documento']==96?'selected':''; ?>>DNI</option>
+            <option value="99" <?php echo $cliente['tipo_documento']==99?'selected':''; ?>>Consumidor Final</option>
+        </select>
     </div>
     <div class="mb-3">
-        <label class="form-label">Dirección</label>
-        <input type="text" name="direccion" class="form-control" value="<?php echo htmlspecialchars($cliente['direccion']); ?>">
+        <label class="form-label">Número Documento</label>
+        <input type="text" name="numero_documento" class="form-control" value="<?php echo htmlspecialchars($cliente['numero_documento']); ?>">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Domicilio</label>
+        <input type="text" name="domicilio" class="form-control" value="<?php echo htmlspecialchars($cliente['domicilio']); ?>">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($cliente['email']); ?>">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Teléfono</label>
+        <input type="text" name="telefono" class="form-control" value="<?php echo htmlspecialchars($cliente['telefono']); ?>">
     </div>
     <div class="form-check mb-3">
         <input class="form-check-input" type="checkbox" name="activo" id="activo" <?php echo $cliente['activo'] ? 'checked' : ''; ?>>
