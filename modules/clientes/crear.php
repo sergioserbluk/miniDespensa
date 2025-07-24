@@ -9,6 +9,7 @@ require_once __DIR__ . '/../../config/config.php';
 require_once BASE_PATH . '/config/db.php';
 require_once INCLUDES_PATH . '/header.php';
 require_once INCLUDES_PATH . '/menu.php';
+require_once INCLUDES_PATH . '/functions.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = trim($_POST['nombre']);
@@ -19,7 +20,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $telefono = trim($_POST['telefono']);
     $activo = isset($_POST['activo']) ? 1 : 0;
 
-    if ($nombre) {
+    if (($tipoDoc === 80 || $tipoDoc === 86) && !validarCuit($numeroDoc)) {
+        $error = 'CUIT/CUIL inválido';
+    } elseif ($nombre) {
         $stmt = $pdo->prepare('INSERT INTO clientes (nombre, tipo_documento, numero_documento, domicilio, email, telefono, activo) VALUES (?, ?, ?, ?, ?, ?, ?)');
         $stmt->execute([
             $nombre,
@@ -32,8 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
         header('Location: index.php');
         exit;
+    } else {
+        $error = 'El nombre es obligatorio';
     }
-    $error = 'El nombre es obligatorio';
 }
 ?>
 <h2>Nuevo Cliente</h2>
@@ -75,5 +79,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <button type="submit" class="btn btn-primary">Guardar</button>
     <a href="index.php" class="btn btn-secondary">Cancelar</a>
 </form>
+<script>
+function validarCuit(cuit) {
+    if(!/^\d{11}$/.test(cuit)) return false;
+    const pesos = [5,4,3,2,7,6,5,4,3,2];
+    let suma = 0;
+    for (let i = 0; i < 10; i++) {
+        suma += parseInt(cuit[i], 10) * pesos[i];
+    }
+    let mod = 11 - (suma % 11);
+    if (mod === 11) mod = 0;
+    else if (mod === 10) mod = 9;
+    return mod === parseInt(cuit[10], 10);
+}
+
+document.querySelector('form').addEventListener('submit', function(e) {
+    const tipo = document.querySelector('select[name="tipo_documento"]').value;
+    const numero = document.querySelector('input[name="numero_documento"]').value.trim();
+    if ((tipo === '80' || tipo === '86') && !validarCuit(numero)) {
+        e.preventDefault();
+        alert('CUIT/CUIL inválido');
+    }
+});
+</script>
 <?php
 require_once INCLUDES_PATH . '/footer.php';
+
