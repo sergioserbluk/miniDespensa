@@ -12,13 +12,24 @@ require_once INCLUDES_PATH . '/menu.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = trim($_POST['nombre']);
+    $tipoDoc = isset($_POST['tipo_documento']) ? (int)$_POST['tipo_documento'] : 99;
+    $numeroDoc = trim($_POST['numero_documento']);
+    $domicilio = trim($_POST['domicilio']);
+    $email = trim($_POST['email']);
     $telefono = trim($_POST['telefono']);
-    $direccion = trim($_POST['direccion']);
     $activo = isset($_POST['activo']) ? 1 : 0;
 
     if ($nombre) {
-        $stmt = $pdo->prepare('INSERT INTO clientes (nombre, telefono, direccion, activo) VALUES (?, ?, ?, ?)');
-        $stmt->execute([$nombre, $telefono, $direccion, $activo]);
+        $stmt = $pdo->prepare('INSERT INTO clientes (nombre, tipo_documento, numero_documento, domicilio, email, telefono, activo) VALUES (?, ?, ?, ?, ?, ?, ?)');
+        $stmt->execute([
+            $nombre,
+            $tipoDoc,
+            $numeroDoc !== '' ? $numeroDoc : null,
+            $domicilio,
+            $email,
+            $telefono,
+            $activo
+        ]);
         header('Location: index.php');
         exit;
     }
@@ -33,12 +44,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="text" name="nombre" class="form-control" required>
     </div>
     <div class="mb-3">
-        <label class="form-label">Teléfono</label>
-        <input type="text" name="telefono" class="form-control">
+        <label class="form-label">Tipo Documento</label>
+        <select name="tipo_documento" class="form-select">
+            <option value="80">CUIT</option>
+            <option value="86">CUIL</option>
+            <option value="96">DNI</option>
+            <option value="99" selected>Consumidor Final</option>
+        </select>
     </div>
     <div class="mb-3">
-        <label class="form-label">Dirección</label>
-        <input type="text" name="direccion" class="form-control">
+        <label class="form-label">Número Documento</label>
+        <input type="text" name="numero_documento" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Domicilio</label>
+        <input type="text" name="domicilio" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" name="email" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Teléfono</label>
+        <input type="text" name="telefono" class="form-control">
     </div>
     <div class="form-check mb-3">
         <input class="form-check-input" type="checkbox" name="activo" id="activo" checked>
