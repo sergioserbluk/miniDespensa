@@ -13,6 +13,10 @@ require_once INCLUDES_PATH . '/menu.php';
 // Obtener productos activos para el selector
 $stmtProd = $pdo->query('SELECT id, nombre, precio_venta FROM productos WHERE estado = 1 ORDER BY nombre');
 $productos = $stmtProd->fetchAll();
+$mapProductos = [];
+foreach ($productos as $p) {
+    $mapProductos[$p['id']] = $p['nombre'];
+}
 
 $mensaje = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -21,12 +25,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cantidades = $_POST['cantidad'] ?? [];
     $precios = $_POST['precio'] ?? [];
 
+    $detallesVenta = [];
+
     if ($prodIds) {
         $total = 0;
         foreach ($prodIds as $idx => $pid) {
             $cant = isset($cantidades[$idx]) ? (float)$cantidades[$idx] : 0;
             $prec = isset($precios[$idx]) ? (float)$precios[$idx] : 0;
             $total += $cant * $prec;
+            $detallesVenta[] = [
+                'nombre'   => $mapProductos[$pid] ?? $pid,
+                'cantidad' => $cant,
+                'precio'   => $prec,
+                'subtotal' => $cant * $prec
+            ];
         }
 
         try {
@@ -44,6 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
             $pdo->commit();
+            $mostrarModal = true;
+            $fechaVenta = date('d/m/Y H:i');
             $mensaje = 'Venta registrada correctamente';
         } catch (Exception $e) {
             $pdo->rollBack();
@@ -55,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 <h2>Nueva Venta</h2>
-<?php if ($mensaje): ?>
+<?php if ($mensaje && empty($mostrarModal)): ?>
 <div class="alert alert-info"><?php echo htmlspecialchars($mensaje); ?></div>
 <?php endif; ?>
 <form method="post" id="formVenta">
@@ -87,6 +101,73 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <button type="button" class="btn btn-secondary" id="agregarFila">Agregar Producto</button>
     <button type="submit" class="btn btn-primary">Confirmar Venta</button>
 </form>
+<?php if (!empty($mostrarModal)): ?>
+<!-- Modal de factura -->
+<div class="modal fade" id="facturaModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Factura</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="facturaContenido">
+        <p><strong>Fecha:</strong> <?php echo $fechaVenta; ?></p>
+        <p><strong>Cliente:</strong> <?php echo htmlspecialchars($cliente); ?></p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Cant.</th>
+              <th>Precio</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($detallesVenta as $d): ?>
+            <tr>
+              <td><?php echo htmlspecialchars($d['nombre']); ?></td>
+              <td><?php echo $d['cantidad']; ?></td>
+              <td><?php echo number_format($d['precio'],2); ?></td>
+              <td><?php echo number_format($d['subtotal'],2); ?></td>
+            </tr>
+            <?php endforeach; ?>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="3" class="text-end fw-bold">Total</td>
+              <td><?php echo number_format($total,2); ?></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="imprimirFactura()">Imprimir Factura</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var facturaModal = new bootstrap.Modal(document.getElementById('facturaModal'));
+    facturaModal.show();
+});
+function imprimirFactura() {
+    const contenido = document.getElementById('facturaContenido').innerHTML;
+    const ventImp = window.open('', '', 'width=800,height=600');
+    ventImp.document.write('<html><head><title>Factura</title>');
+    ventImp.document.write('<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">');
+    ventImp.document.write('</head><body>');
+    ventImp.document.write(contenido);
+    ventImp.document.write('</body></html>');
+    ventImp.document.close();
+    ventImp.focus();
+    ventImp.print();
+    ventImp.close();
+    window.location.href = 'index.php';
+}
+</script>
+<?php endif; ?>
 <script>
 const productos = <?php echo json_encode($productos); ?>;
 function crearFila() {
