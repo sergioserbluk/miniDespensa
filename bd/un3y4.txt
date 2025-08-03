@@ -1,0 +1,195 @@
+// Unidad 3 – Formularios y Eventos
+
+::U3_P1_Formularios:: ¿Qué propiedad del formulario define el texto que aparece en la barra de título?
+{
+~BackColor
+~StartPosition
+=Text
+~ControlBox
+}
+
+::U3_P2_Formularios:: ¿Cuál de las siguientes afirmaciones es correcta sobre los formularios en VB.NET?
+{
+~Form2.Close() muestra un formulario nuevo.
+=Form2.Show() permite mostrar un formulario sin bloquear el actual.
+~Form2.ShowDialog() deja el formulario oculto.
+~Form2.Top muestra la posición vertical.
+}
+
+::U3_P3_MostrarCerrar:: ¿Qué método se utiliza para mostrar un formulario de forma modal?
+{
+=ShowDialog()
+~Show()
+~Focus()
+~New()
+}
+
+::U3_P4_MostrarCerrar:: ¿Qué método se usa para ocultar temporalmente un formulario?
+{
+=Hide()
+~Close()
+~Dispose()
+~Minimize()
+}
+
+::U3_P5_EventosFormulario:: ¿Cuál es el evento que se ejecuta cuando el formulario se carga?
+{
+=Load
+~Click
+~Focus
+~Start
+}
+
+::U3_P6_EventosFormulario:: ¿Qué evento ocurre cuando el formulario pierde el enfoque?
+{
+=LostFocus
+~GotFocus
+~Leave
+~Blur
+}
+
+::U3_P7_EventosMouse:: ¿Qué evento se utiliza para detectar cuando el mouse entra al área de un control?
+{
+=MouseEnter
+~MouseClick
+~MouseDown
+~Hover
+}
+
+::U3_P8_EventosMouse:: ¿Cuál de los siguientes eventos se activa al hacer clic con el mouse?
+{
+=MouseClick
+~MouseEnter
+~MouseWheel
+~MouseOver
+}
+
+::U3_P9_EventosTeclado:: ¿Qué propiedad debe estar en True para que un formulario capture las teclas antes que los controles?
+{
+=KeyPreview
+~KeyEnable
+~InterceptKeys
+~FormKeys
+}
+
+::U3_P10_EventosTeclado:: ¿Qué evento permite capturar combinaciones como Ctrl + C?
+{
+=KeyDown
+~KeyPress
+~KeyUp
+~MouseClick
+}
+
+::U3_P11_Posicion:: ¿Qué propiedad permite mover un formulario horizontalmente?
+{
+=Left
+~Width
+~Top
+~BackColor
+}
+
+::U3_P12_Posicion:: ¿Qué método permite establecer la posición y tamaño del formulario al mismo tiempo?
+{
+=SetBounds
+~Move
+~Resize
+~Align
+}
+
+// Unidad 4 – Controles y Validaciones
+
+::U4_P1_ControlesVisuales:: ¿Qué control permite seleccionar una sola opción de entre varias?
+{
+=RadioButton
+~CheckBox
+~ListBox
+~Label
+}
+
+::U4_P2_ControlesVisuales:: ¿Cuál de estos controles permite mostrar múltiples opciones para seleccionar solo una?
+{
+=ComboBox
+~TextBox
+~Label
+~Button
+}
+
+::U4_P3_Timer:: ¿Cuál es el evento que se utiliza para ejecutar código repetido con un Timer?
+{
+=Tick
+~Click
+~Loop
+~Interval
+}
+
+::U4_P4_Timer:: ¿Qué propiedad del Timer determina el tiempo entre ejecuciones?
+{
+=Interval
+~Duration
+~TickRate
+~TimeOut
+}
+
+::U4_P5_Nombres:: Según la convención húngara, ¿cómo debería nombrarse un TextBox que almacena el nombre de un usuario?
+{
+=txtNombre
+~nombreUsuario
+~Textbox1
+~lblNombre
+}
+
+::U4_P6_Nombres:: ¿Cómo debería nombrarse correctamente un botón para aceptar datos, según buenas prácticas?
+{
+=btnAceptar
+~button1
+~AceptarBoton
+~bAceptar
+}
+
+::U4_P7_EntradaConversion:: ¿Qué función convierte un valor de texto a número entero en VB.NET?
+{
+=CInt()
+~ToInt()
+~ValToInt()
+~StrToNum()
+}
+
+::U4_P8_EntradaConversion:: ¿Cuál de estas funciones se usa para convertir un número a texto?
+{
+=CStr()
+~CInt()
+~Val()
+~Parse()
+}
+
+::U4_P9_Validacion:: ¿Cuál de las siguientes estructuras permite validar si un campo está vacío?
+{
+=If txtNombre.Text = "" Then
+~For Each txt In Form
+~While txtNombre = ""
+~If IsNothing(txtNombre)
+}
+
+::U4_P10_Validacion:: ¿Qué instrucción se usa para evaluar múltiples opciones?
+{
+=Select Case
+~If Then Else
+~Loop Until
+~Switch
+}
+
+::U4_P11_Listas:: ¿Qué propiedad de un ListBox permite acceder al ítem seleccionado?
+{
+=SelectedItem
+~CurrentText
+~SelectedIndex
+~ItemIndex
+}
+
+::U4_P12_Listas:: ¿Qué método se usa para agregar un nuevo elemento a un ListBox?
+{
+=Items.Add()
+~Insert()
+~Append()
+~AddItem()
+}

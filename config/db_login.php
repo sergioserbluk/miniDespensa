@@ -3,8 +3,8 @@
 
 $host = 'localhost';
 $dbname = 'minidespensa';
-$user = 'minidespensa_login';
-$pass = 'clave_segura_login';
+$user = 'miniuser';
+$pass = 'miniuser123';
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";

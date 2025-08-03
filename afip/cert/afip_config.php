@@ -10,7 +10,7 @@ require_once VENDOR_PATH . '/autoload.php';
 $afip = new Afip([
     'CUIT' => 20111111112,
     'production' => false,
-    'cert' => AFIP_CERT_PATH . '/certificate.crt',
-    'key'  => AFIP_CERT_PATH . '/private.key',
+    'cert' => AFIP_CERT_PATH . '/certificate.crt', // Ruta al certificado
+    'key'  => AFIP_CERT_PATH . '/private.key', // Ruta al certificado y clave privada
     'ta_folder' => AFIP_CERT_PATH . '/tmp' // opcional para almacenar el ticket de acceso
 ]);

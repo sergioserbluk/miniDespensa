@@ -21,9 +21,9 @@ try {
         $_SESSION['usuario'] = $user['usuario'];
         $_SESSION['nombre'] = $user['nombre'];
         $_SESSION['rol'] = $user['rol'];
-        header('Location: ' . BASE_URL . 'public/index.php');
+        header('Location: ' . BASE_URL . 'index.php');
     } else {
-        header('Location: ' . BASE_URL . 'public/index.php?error=1');
+        header('Location: ' . BASE_URL . 'index.php?error=1');
     }
 } catch (PDOException $e) {
     die("Error: " . $e->getMessage());

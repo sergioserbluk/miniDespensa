@@ -1,0 +1,20 @@
+openssl req -new -key MiClavePrivada -subj "/C=AR/O=subj_o/CN=subj_cn/serialNumber=CUIT subj_cuit" -out MiPedidoCSR
+donde hay que reemplazar
+
+MiClavePrivada por nombre del archivo elegido en el primer paso.
+subj_o por el nombre de su empresa
+subj_cn por el nombre de su sistema cliente
+subj_cuit por la CUIT (sólo los 11 dígitos, sin guiones) de la empresa o del programador (persona jurídica)
+MiClavePrivada por el nombre del archivo de la clave privada generado antes
+MiPedidoCSR por el nombre del archivo CSR que se va a crear
+Por ejemplo para
+una empresa llamada EmpresaPrueba
+un sistema TestSystem
+el cuit = 20123456789
+con el archivo MiClavePrivada generado en el punto anterior:
+openssl req -new -key MiClavePrivada -subj "/C=AR/O=EmpresaPrueba/CN=TestSystem/serialNumber=CUIT 20123456789" -out MiPedidoCSR
+
+Si no hay errores, el archivo 'MiPedidoCSR' será utilizado al momento de obtener el DN y el certificado.
+El comando anterior genera un archivo CSR (Certificate Signing Request) que contiene la información necesaria para solicitar un certificado digital a una autoridad certificadora (CA). Este archivo es esencial para la creación de un certificado SSL/TLS que se utilizará en su aplicación o sitio web.
+comando a utilizar:
+openssl req -new -key MiClavePrivada -subj "/C=AR/O=despensaPrueba/CN=minidespensa/serialNumber=CUIT 20252343173" -out MiPedidoCSR
