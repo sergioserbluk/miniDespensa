@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
-    header('Location: ' . BASE_URL . 'public/index.php');
+    header('Location: ' . BASE_URL . 'index.php');
     exit;
 }
 
@@ -38,7 +38,7 @@ $productos = $stmt->fetchAll();
                         $thumbRel  = str_replace('originales', 'thumbs', $p['imagen']);
                         $thumbPath = PUBLIC_PATH . '/' . $thumbRel;
                         if (file_exists($thumbPath)) {
-                            echo '<img src="' . BASE_URL . 'public/' . $thumbRel . '" width="50" class="img-thumbnail">';
+                            echo '<img src="' . BASE_URL . $thumbRel . '" width="50" class="img-thumbnail">';
                         }
                     }
                     ?>
