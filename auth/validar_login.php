@@ -7,7 +7,7 @@ $usuario = trim($_POST['usuario'] ?? '');
 $clave = trim($_POST['clave'] ?? '');
 
 if ($usuario === '' || $clave === '') {
-    header('Location: ' . BASE_URL . 'public/index.php?error=1');
+    header('Location: ' . BASE_URL . 'index.php?error=1');
     exit;
 }
 
