@@ -7,7 +7,7 @@ $usuario = trim($_POST['usuario'] ?? '');
 $clave = trim($_POST['clave'] ?? '');
 
 if ($usuario === '' || $clave === '') {
-    header('Location: ' . BASE_URL . 'index.php?error=1');
+    header('Location: ' . BASE_URL . 'login.php?error=1');
     exit;
 }
 
@@ -23,7 +23,7 @@ try {
         $_SESSION['rol'] = $user['rol'];
         header('Location: ' . BASE_URL . 'index.php');
     } else {
-        header('Location: ' . BASE_URL . 'index.php?error=1');
+        header('Location: ' . BASE_URL . 'login.php?error=1');
     }
 } catch (PDOException $e) {
     die("Error: " . $e->getMessage());

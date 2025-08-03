@@ -2,9 +2,9 @@
 session_start();
 require_once __DIR__ . '/../config/config.php';
 
-// Si el usuario NO inició sesión, mostrar login
+// Si el usuario NO inició sesión, redirigir al login
 if (!isset($_SESSION['usuario'])) {
-    require_once AUTH_PATH . '/login_modal.php';
+    header('Location: ' . BASE_URL . 'login.php');
     exit;
 }
 
