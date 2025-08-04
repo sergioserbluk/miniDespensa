@@ -7,7 +7,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
-    <a class="navbar-brand" href="<?php echo BASE_URL . 'index.php'; ?>">MiniDespensa</a>
+    <a class="navbar-brand" href="<?php echo BASE_URL . '/index.php'; ?>">MiniDespensa</a>
     <div class="ms-auto text-white">
         <?php echo $_SESSION['nombre']; ?> (<?php echo $_SESSION['rol']; ?>)
     </div>
