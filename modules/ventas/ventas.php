@@ -69,6 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 <h2>Nueva Venta</h2>
+<a href="listado_ventas.php" class="btn btn-secondary mb-3">Listado de Ventas</a>
 <?php if ($mensaje && empty($mostrarModal)): ?>
 <div class="alert alert-info"><?php echo htmlspecialchars($mensaje); ?></div>
 <?php endif; ?>
