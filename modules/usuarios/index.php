@@ -15,7 +15,7 @@ $stmt = $pdo->query('SELECT id, usuario, nombre, rol, activo FROM usuarios ORDER
 $usuarios = $stmt->fetchAll();
 ?>
 <h2>Gestión de Usuarios</h2>
-<a href="crear.php" class="btn btn-primary mb-3">Nuevo Usuario</a>
+<a href="usuarios_nuevo.php" class="btn btn-primary mb-3">Nuevo Usuario</a>
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -36,7 +36,7 @@ $usuarios = $stmt->fetchAll();
                 <td><?php echo $u['rol']; ?></td>
                 <td><?php echo $u['activo'] ? 'Sí' : 'No'; ?></td>
                 <td>
-                    <a class="btn btn-sm btn-secondary" href="editar.php?id=<?php echo $u['id']; ?>">Editar</a>
+                    <a class="btn btn-sm btn-secondary" href="usuarios_editar.php?id=<?php echo $u['id']; ?>">Editar</a>
                 </td>
             </tr>
         <?php endforeach; ?>

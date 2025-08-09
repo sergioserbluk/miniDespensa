@@ -11,6 +11,6 @@ require_once INCLUDES_PATH . '/header.php';
 require_once INCLUDES_PATH . '/menu.php';
 ?>
 <h2>Ventas</h2>
-<a href="ventas.php" class="btn btn-primary mb-3">Nueva Venta</a>
+<a href="<?php echo BASE_URL . '/ventas_index.php'; ?>" class="btn btn-primary mb-3">Nueva Venta</a>
 <?php
 require_once INCLUDES_PATH . '/footer.php';

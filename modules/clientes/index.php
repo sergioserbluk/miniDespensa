@@ -16,7 +16,7 @@ $clientes = $stmt->fetchAll();
 $tipos = [80 => 'CUIT', 86 => 'CUIL', 96 => 'DNI', 99 => 'CF'];
 ?>
 <h2>Clientes</h2>
-<a href="crear.php" class="btn btn-primary mb-3">Nuevo Cliente</a>
+<a href="clientes_crear.php" class="btn btn-primary mb-3">Nuevo Cliente</a>
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -43,7 +43,7 @@ $tipos = [80 => 'CUIT', 86 => 'CUIL', 96 => 'DNI', 99 => 'CF'];
                 <td><?php echo htmlspecialchars($c['telefono']); ?></td>
                 <td><?php echo $c['activo'] ? 'Sí' : 'No'; ?></td>
                 <td>
-                    <a class="btn btn-sm btn-secondary" href="editar.php?id=<?php echo $c['id']; ?>">Editar</a>
+                    <a class="btn btn-sm btn-secondary" href="clientes_editar.php?id=<?php echo $c['id']; ?>">Editar</a>
                 </td>
             </tr>
         <?php endforeach; ?>

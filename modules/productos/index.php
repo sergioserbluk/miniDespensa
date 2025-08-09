@@ -17,7 +17,7 @@ $stmt = $pdo->query('SELECT id, nombre, precio_venta, stock_actual, imagen FROM 
 $productos = $stmt->fetchAll();
 ?>
 <h2>Listado de Productos</h2>
-<a href="crear.php" class="btn btn-primary mb-3">Nuevo Producto</a>
+<a href="productos_crear.php" class="btn btn-primary mb-3">Nuevo Producto</a>
 <?php if (count($productos) > 0): ?>
 <table class="table table-bordered">
     <thead>
@@ -38,7 +38,7 @@ $productos = $stmt->fetchAll();
                         $thumbRel  = str_replace('originales', 'thumbs', $p['imagen']);
                         $thumbPath = PUBLIC_PATH . '/' . $thumbRel;
                         if (file_exists($thumbPath)) {
-                            echo '<img src="' . BASE_URL . $thumbRel . '" width="50" class="img-thumbnail">';
+                            echo '<img src="' . BASE_URL . '/' . $thumbRel . '" width="50" class="img-thumbnail">';
                         }
                     }
                     ?>
@@ -47,8 +47,8 @@ $productos = $stmt->fetchAll();
                 <td><?php echo number_format($p['precio_venta'], 2); ?></td>
                 <td><?php echo $p['stock_actual']; ?></td>
                 <td>
-                    <a class="btn btn-sm btn-secondary" href="editar.php?id=<?php echo $p['id']; ?>">Editar</a>
-                    <a class="btn btn-sm btn-warning" href="descontinuar.php?id=<?php echo $p['id']; ?>">Descontinuar</a>
+                    <a class="btn btn-sm btn-secondary" href="productos_editar.php?id=<?php echo $p['id']; ?>">Editar</a>
+                    <a class="btn btn-sm btn-warning" href="productos_descontinuar.php?id=<?php echo $p['id']; ?>">Descontinuar</a>
                 </td>
             </tr>
         <?php endforeach; ?>

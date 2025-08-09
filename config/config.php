@@ -1,6 +1,6 @@
 <?php
 // Ruta absoluta al directorio raíz del proyecto
-define('BASE_PATH', realpath(__DIR__ . '/..'));
+define('BASE_PATH', realpath(__DIR__ . '/..'));//con esto sale de /config que es donde está este archivo y se va al directorio raíz del proyecto que es miniDespensa
 
 // URL base del dominio (DocumentRoot apunta a /public)
 define('BASE_HOST', 'http://sitio1.com');
