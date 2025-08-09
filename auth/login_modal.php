@@ -9,7 +9,7 @@
 <body class="bg-light d-flex justify-content-center align-items-center" style="height: 100vh;">
     <div class="card shadow p-4" style="min-width: 300px;">
         <h4 class="mb-3">Inicio de Sesión</h4>
-        <form action="<?php echo BASE_URL . '/login.php'; ?>" method="POST">
+        <form action="<?php echo BASE_URL . 'login.php'; ?>" method="POST">
             <div class="mb-3">
                 <label for="usuario" class="form-label">Usuario</label>
                 <input type="text" class="form-control" id="usuario" name="usuario" required>
