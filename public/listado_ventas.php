@@ -1,5 +1,5 @@
 <?php
 require_once __DIR__ . '/../config/config.php';
-require_once MODULES_PATH . '/modules/ventas/listados.php';
-// Aquí va la lógica y salida HTML del módulo ventas
+require_once MODULES_PATH . '/ventas/listado_ventas.php';
+// Página de acceso al listado de ventas
 ?>
